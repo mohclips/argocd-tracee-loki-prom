@@ -3,3 +3,5 @@
 old
 
 configs/config
+configs/join.sh
+configs/argocd_admin_pwd
