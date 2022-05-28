@@ -2,9 +2,6 @@
 *.log
 old
 
-<<<<<<< HEAD
 configs/config
 configs/join.sh
 configs/argocd_admin_pwd
-=======
->>>>>>> parent of a353498... remove join and argocd pass - again not worth anythign to anyone
