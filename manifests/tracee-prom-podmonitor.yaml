@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: tracee
+  namespace: tracee
+spec:
+  podMetricsEndpoints:
+    - honorLabels: true
+      interval: 15s
+      path: /metrics
+      targetPort: 4466
+      scheme: http
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tracee
