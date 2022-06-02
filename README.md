@@ -21,9 +21,23 @@ The idea is to link all these together and run tests (:skull: hacks :skull:) aga
 
 # Requirements
 
+- Vagrant
+- VirtualBox
 - kubernetes 1.24.0 (latest at the time)
-- containerd (not docker.io)
+- containerd 1.5.9-0ubuntu3 (not docker.io)
 - Ubuntu 22.04 LTS  (required for BTF kernel and tracee)
+- dockerd (for remote trivy server)
+
+# Vagrant and Virtual Box
+
+```
+$ vagrant version
+Installed Version: 2.2.19
+Latest Version: 2.2.19
+
+$ VBoxManage --version
+6.1.34r150636
+```
 
 # Notes
 
@@ -37,10 +51,10 @@ The idea is to link all these together and run tests (:skull: hacks :skull:) aga
 - /vagrant/init-scripts/cluster-init.sh (install cilium)
 - /vagrant/init_scripts/install-monitoring-environment.sh  (install prometheus, loki, grafana)
 - /vagrant/init_scripts/metallb.sh  (LoadBalancer - this requires external DNS and changes to match local network)
-- /vagrant/init_scripts/trivy_client-server_patch.sh
+- /vagrant/init_scripts/trivy_client-server_patch.sh (point to remote trivy server)
   
 On the worker node
 - vssh worker-1
 - /vagrant/init_scripts/trivy-server.sh
-(not yet working as no docker installed) - might wait for trivy to support containerd?
+(not yet working as no dockerd installed) - might wait for trivy to support containerd?
 
