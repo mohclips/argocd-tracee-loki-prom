@@ -23,9 +23,6 @@ spec:
       labels:
         app.kubernetes.io/name: tracee
       name: tracee
-      annotations:
-        prometheus.io/scrape: 'true'
-        prometheus.io/port: '4466'
     spec:
       containers:
       - name: tracee
@@ -39,6 +36,12 @@ spec:
             value: /etc/os-release-host
         securityContext:
           privileged: true
+        ports:
+        # must define the metrics port AND name it for prometheus podMonitor operator to find it
+        - containerPort: 4466
+          name: tracee-metrics
+          protocol: TCP
+
         volumeMounts:
         - name: tmp-tracee
           mountPath: /tmp/tracee

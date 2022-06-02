@@ -3,13 +3,20 @@ kind: PodMonitor
 metadata:
   name: tracee
   namespace: tracee
+  labels:
+    # required to match podMonitorSelector in the Prometheus config
+    release: prom
 spec:
+  # https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#podmetricsendpoint
   podMetricsEndpoints:
-    - honorLabels: true
-      interval: 15s
-      path: /metrics
-      targetPort: 4466
-      scheme: http
+  - interval: 15s
+    honorLabels: true
+    path: /metrics
+    # containerPort must be named in the pod spec, integer port number will not work!
+    port: tracee-metrics
+    scheme: http
   selector:
+    # which pods to match
     matchLabels:
       app.kubernetes.io/name: tracee
+
