@@ -26,21 +26,29 @@ spec:
     spec:
       containers:
       - name: tracee
-        image: docker.io/aquasec/tracee:full
+        #image: docker.io/aquasec/tracee:full
+        image: docker.io/aquasec/tracee:latest
         imagePullPolicy: IfNotPresent
         args:
           #- --webhook http://tracee-webhook:2801 --webhook-template ./templates/rawjson.tmpl --webhook-content-type application/json
+          - --output-template /tracee/rules/output.tmpl
           - --metrics
         env:
           - name: LIBBPFGO_OSRELEASE_FILE
             value: /etc/os-release-host
         securityContext:
+          # see https://aquasecurity.github.io/tracee/v0.7.0/install/prerequisites/#permissions
           privileged: true
         ports:
         # must define the metrics port AND name it for prometheus podMonitor operator to find it
+        # https://aquasecurity.github.io/tracee/dev/integrations/#prometheus
         - containerPort: 4466
-          name: tracee-metrics
+          name: metrics-rules
           protocol: TCP
+        - containerPort: 3366
+          name: metrics-ebpf
+          protocol: TCP
+
 
         volumeMounts:
         - name: tmp-tracee

@@ -13,7 +13,13 @@ spec:
     honorLabels: true
     path: /metrics
     # containerPort must be named in the pod spec, integer port number will not work!
-    port: tracee-metrics
+    port: metrics-rules
+    scheme: http
+  - interval: 15s
+    honorLabels: true
+    path: /metrics
+    # containerPort must be named in the pod spec, integer port number will not work!
+    port: metrics-ebpf
     scheme: http
   selector:
     # which pods to match
